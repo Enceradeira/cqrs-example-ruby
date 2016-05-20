@@ -11,7 +11,9 @@ class Service
   end
 
   def get_persons
-    []
+    person_facade = ServiceLocator.person_facade
+
+    person_facade.get_persons
   end
 
 end
