@@ -1,14 +1,14 @@
 require 'rspec'
 require_relative '../../../lib/application/service_locator'
-require_relative '../../../lib/application/service'
+require_relative '../../../lib/application/app_service'
 
-describe Service do
-  let(:service) { ServiceLocator.service }
+describe AppService do
+  let(:app_service) { ServiceLocator.app_service }
   describe 'register_person' do
     it 'should add person' do
-      service.register_person('John')
+      app_service.register_person('John')
 
-      persons = service.get_persons
+      persons = app_service.get_persons
 
       expect(persons).to eq(['John'])
     end
