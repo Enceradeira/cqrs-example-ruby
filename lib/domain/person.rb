@@ -1,9 +1,12 @@
 require_relative 'person_registered'
 
 class Person
+  attr_reader :id
+
   private
   def initialize(id, name)
     @changes = []
+    @id = id
     apply_change(PersonRegistered.new(id, name))
   end
 
