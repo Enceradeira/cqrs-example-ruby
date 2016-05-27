@@ -12,6 +12,6 @@ class PersonFacade
   def get_person(person_id)
     person = @db.persons.find { |p| p[:id] == person_id }
     raise StandardError.new "person #{person_id} not found" if person.nil?
-    person
+    person.clone
   end
 end

@@ -16,13 +16,16 @@ class AppService
     person_id
   end
 
-  def change_person_name(person_id, new_name)
-    person = @person_facade.get_person(person_id)
-    @bus.send_cmd(ChangePersonName.new(person_id, new_name, person[:version]))
+  def change_person_name(person_id, new_name, original_version)
+    @bus.send_cmd(ChangePersonName.new(person_id, new_name, original_version))
   end
 
   def get_persons
     @person_facade.get_persons
+  end
+
+  def get_person(person_id)
+    @person_facade.get_person(person_id)
   end
 
 end
