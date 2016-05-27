@@ -37,5 +37,17 @@ describe EventStore do
                                                 EventDescriptor.new(2, evt3)])
     end
   end
+
+  describe 'get_events_for_aggregate' do
+    it 'returns events of aggregate'do
+      id_1 = 4
+      if_2 = 5
+      events_1 = %w(Evt1 Evt2)
+      store.save_events(id_1, events_1, nil)
+      store.save_events(if_2, %w(Evt3 Evt4), nil)
+
+      expect(store.get_events_for_aggregate(id_1)).to eq(events_1                                                                )
+    end
+  end
 end
 

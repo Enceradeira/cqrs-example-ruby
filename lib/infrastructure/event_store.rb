@@ -1,4 +1,5 @@
 require_relative 'event_descriptor'
+require_relative 'concurrency_error'
 
 class EventStore
 
@@ -23,5 +24,9 @@ class EventStore
 
     # publish new events
     new_events_descriptors.each { |event| @publisher.send_event(event) }
+  end
+
+  def get_events_for_aggregate(aggregate_id)
+    @events[aggregate_id].map { |desc| desc.event }
   end
 end

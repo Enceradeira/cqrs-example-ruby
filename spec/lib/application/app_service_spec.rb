@@ -24,7 +24,9 @@ describe AppService do
 
       expect(app_service.get_persons).to eq(%w(John Zorro))
     end
-    it 'raises error when person not exists'
+    it 'raises error when person not exists' do
+      expect { app_service.change_person_name('not existing', 'Zorro') }.to raise_error(StandardError)
+    end
   end
 
 
