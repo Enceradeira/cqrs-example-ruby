@@ -26,7 +26,7 @@ class ServiceLocator
         repository = Repository.new(EventStore.new(@bus))
         @bus.register_handler(CommandHandler.new(repository))
         # event bus
-        person_updater = PersonModelUpdater.new
+        person_updater = PersonModelUpdater.new(@read_db)
         @bus.register_handler(person_updater)
       end
       @bus
