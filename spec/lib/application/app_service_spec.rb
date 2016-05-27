@@ -7,10 +7,13 @@ describe AppService do
   describe 'register_person' do
     it 'should add person' do
       app_service.register_person('John')
+      app_service.register_person('Alistair')
 
       persons = app_service.get_persons
 
-      expect(persons).to eq(['John'])
+      expect(persons).to eq(%w(Alistair John))
     end
   end
+
+
 end

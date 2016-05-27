@@ -9,5 +9,6 @@ class PersonModelUpdater
   def person_registered(event_descriptor)
     event =  event_descriptor.event
     @database.persons << event.name
+    @database.persons.sort!
   end
 end
