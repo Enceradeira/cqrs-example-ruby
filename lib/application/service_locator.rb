@@ -8,32 +8,21 @@ require_relative '../../lib/readmodel/database'
 require_relative '../../lib/readmodel/person_model_updater'
 
 class ServiceLocator
-  @read_db = Database.new
-
   class << self
-    private
+    attr_reader :bus
+    attr_reader :read_db
 
-
-    public
-    def app_service
-      AppService.new
-    end
-
-    def bus
-      if @bus == nil
-        @bus = Bus.new
-        # command bus
-        repository = Repository.new(EventStore.new(@bus))
-        @bus.register_handler(CommandHandler.new(repository))
-        # event bus
-        person_updater = PersonModelUpdater.new(@read_db)
-        @bus.register_handler(person_updater)
-      end
-      @bus
-    end
-
-    def person_facade
-      PersonFacade.new(@read_db)
+    def reset
+      @read_db = Database.new
+      @bus = Bus.new
+      # command bus
+      repository = Repository.new(EventStore.new(@bus))
+      @bus.register_handler(CommandHandler.new(repository))
+      # event bus
+      person_updater = PersonModelUpdater.new(@read_db)
+      @bus.register_handler(person_updater)
     end
   end
+
+  reset
 end

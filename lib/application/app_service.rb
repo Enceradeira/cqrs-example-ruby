@@ -10,8 +10,12 @@ class AppService
     bus.send_cmd(RegisterPerson.new(Sequence.next, name))
   end
 
+  def change_person_name(person_id, new_name)
+
+  end
+
   def get_persons
-    person_facade = ServiceLocator.person_facade
+    person_facade = PersonFacade.new(ServiceLocator.read_db)
 
     person_facade.get_persons
   end
