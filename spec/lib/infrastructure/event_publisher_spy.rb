@@ -7,7 +7,7 @@ class EventPublisherSpy
   public
   attr_reader :published_events
 
-  def publish(event)
+  def send_event(event)
     @published_events << event
   end
 

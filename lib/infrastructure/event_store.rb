@@ -22,6 +22,6 @@ class EventStore
     @events[aggregate_id] = events
 
     # publish new events
-    new_events_descriptors.each { |event| @publisher.publish(event) }
+    new_events_descriptors.each { |event| @publisher.send_event(event) }
   end
 end

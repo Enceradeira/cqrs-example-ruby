@@ -23,7 +23,7 @@ class ServiceLocator
       if @bus == nil
         @bus = Bus.new
         # command bus
-        repository = Repository.new(EventStore.new)
+        repository = Repository.new(EventStore.new(@bus))
         @bus.register_handler(CommandHandler.new(repository))
         # event bus
         person_updater = PersonModelUpdater.new
