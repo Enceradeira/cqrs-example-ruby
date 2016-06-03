@@ -1,5 +1,6 @@
 require_relative 'resources'
 require_relative 'command_handler'
+require_relative '../infrastructure/bus'
 require_relative '../../lib/domain/repository'
 require_relative '../../lib/readmodel/person_facade'
 require_relative '../../lib/readmodel/database'
@@ -11,18 +12,20 @@ class ServiceLocator
       Resources.read_db
     end
 
-    def bus
+    def command_bus
       Resources.bus
     end
 
     def reset
       Resources.reset
-      # command bus
-      repository = Repository.new(EventStore.new(bus))
-      bus.register_handler(CommandHandler.new(repository))
-      # event bus
+
+      event_bus = Bus.new
+      # command bus registrations
+      repository = Repository.new(EventStore.new(event_bus))
+      command_bus.register_handler(CommandHandler.new(repository))
+      # event bus registrations
       person_updater = PersonModelUpdater.new(read_db)
-      bus.register_handler(person_updater)
+      event_bus.register_handler(person_updater)
     end
   end
 

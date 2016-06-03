@@ -7,7 +7,7 @@ class AppService
   private
 
   def bus
-    ServiceLocator.bus
+    ServiceLocator.command_bus
   end
 
   def person_facade
