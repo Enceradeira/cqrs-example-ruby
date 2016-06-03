@@ -38,6 +38,10 @@ class Person
     apply_change_and_save(NameChanged.new(id, new_name))
   end
 
+  def deregister
+    apply_change_and_save(PersonDeregistered.new(id))
+  end
+
   def uncommitted_changes
     @changes
   end

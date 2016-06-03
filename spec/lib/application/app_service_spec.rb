@@ -59,8 +59,16 @@ describe AppService do
       # session 2 CAN'T update on stale data
       expect { change_name.call(person_on_session2, 'Claudio') }.to raise_error(ConcurrencyError)
     end
-
   end
 
+  describe 'deregister person' do
 
+    it 'removes person' do
+      id = app_service.register_person('Mary')
+
+      app_service.deregister_person(id, 0)
+
+      expect(app_service.get_persons).to be_empty
+    end
+  end
 end

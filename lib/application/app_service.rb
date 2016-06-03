@@ -28,4 +28,7 @@ class AppService
     @person_facade.get_person(person_id)
   end
 
+  def deregister_person(person_id, original_version)
+    @bus.send_cmd(DeregisterPerson.new(person_id, original_version))
+  end
 end
