@@ -61,7 +61,7 @@ describe AppService do
     end
   end
 
-  describe 'deregister person' do
+  describe 'deregister_person' do
 
     it 'removes person' do
       id = app_service.register_person('Mary')
@@ -70,5 +70,19 @@ describe AppService do
 
       expect(app_service.get_persons).to be_empty
     end
+  end
+
+  describe 'backup_and_restore' do
+      it 'should recreate previous state' do
+        app_service.register_person('John')
+        id_alistair = app_service.register_person('Alistair')
+        app_service.register_person('Betty')
+        app_service.change_person_name(id_alistair,'John',0)
+        observed_state = app_service.get_persons
+
+        app_service.backup_and_restore
+
+        expect(app_service.get_persons).to eq(observed_state)
+      end
   end
 end
