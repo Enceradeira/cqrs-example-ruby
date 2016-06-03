@@ -1,11 +1,11 @@
 require 'rspec'
-require_relative '../../../lib/application/service_locator'
+require_relative '../../../lib/application/resources'
 require_relative '../../../lib/application/app_service'
 require_relative '../../../lib/infrastructure/concurrency_error'
 
 describe AppService do
   let(:app_service) { AppService.new }
-  before(:each) { ServiceLocator.reset }
+  before(:each) { Resources.reset }
 
   describe 'register_person' do
 
@@ -73,16 +73,18 @@ describe AppService do
   end
 
   describe 'backup_and_restore' do
-      it 'should recreate previous state' do
-        app_service.register_person('John')
-        id_alistair = app_service.register_person('Alistair')
-        app_service.register_person('Betty')
-        app_service.change_person_name(id_alistair,'John',0)
-        observed_state = app_service.get_persons
+    it 'should recreate previous state' do
+      id_john = app_service.register_person('John')
+      id_alistair = app_service.register_person('Alistair')
+      app_service.register_person('Betty')
+      app_service.change_person_name(id_alistair, 'John', 0)
+      app_service.change_person_name(id_john, 'Cameron', 0)
+      app_service.deregister_person(id_john, 1)
+      observed_state = app_service.get_persons
 
-        app_service.backup_and_restore
+      app_service.backup_and_restore
 
-        expect(app_service.get_persons).to eq(observed_state)
-      end
+      expect(app_service.get_persons).to eq(observed_state)
+    end
   end
 end
