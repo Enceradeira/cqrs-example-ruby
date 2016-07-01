@@ -12,7 +12,7 @@ class ServiceLocator
     private
     def reset
       # command bus registrations
-      repository = Repository.new(Resources.event_store)
+      repository = Domain::Repository.new(Resources.event_store)
       command_bus.register_handler(CommandHandler.new(repository))
       command_bus.register_handler(Resources.command_backup)
       # event bus registrations

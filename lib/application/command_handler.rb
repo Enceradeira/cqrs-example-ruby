@@ -14,7 +14,7 @@ class CommandHandler
 
   public
   def register_person(cmd)
-    person = Person.new({id: cmd.person_id, name: cmd.name})
+    person = Domain::Person.new({id: cmd.person_id, name: cmd.name})
     @repository.save(person, -1)
   end
 

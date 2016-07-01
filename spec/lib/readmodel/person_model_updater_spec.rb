@@ -4,11 +4,11 @@ require_relative '../../../lib/infrastructure/event_descriptor'
 require_relative '../../../lib/domain/events'
 
 def person_registered_event(id, name, version)
-  EventDescriptor.new(version, PersonRegistered.new(id, name))
+  EventDescriptor.new(version, Domain::PersonRegistered.new(id, name))
 end
 
 def name_changed_event(id, new_name, version)
-  EventDescriptor.new(version, NameChanged.new(id, new_name))
+  EventDescriptor.new(version, Domain::NameChanged.new(id, new_name))
 end
 
 describe PersonModelUpdater do

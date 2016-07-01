@@ -1,4 +1,4 @@
-require 'active_support/all'
+require_relative '../common/class'
 
 class Bus
   private
@@ -18,12 +18,12 @@ class Bus
   end
 
   def send_cmd(cmd)
-    method_name = cmd.class.name.underscore.to_sym
+    method_name = cmd.class.to_method_name
     dispatch(cmd, method_name)
   end
 
   def send_event(event)
-    method_name = event.event.class.name.underscore.to_sym
+    method_name = event.event.class.to_method_name
     dispatch(event, method_name)
   end
 end
