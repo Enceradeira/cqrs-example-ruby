@@ -1,7 +1,9 @@
-class Database
-  attr_reader :persons
+module ReadModel
+  class Database
+    attr_reader :persons
 
-  def initialize
-    @persons = []
+    def initialize
+      @persons = []
+    end
   end
 end

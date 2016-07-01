@@ -12,7 +12,7 @@ class AppService
   end
 
   def person_facade
-    PersonFacade.new(ServiceLocator.read_db)
+    ReadModel::PersonFacade.new(ServiceLocator.read_db)
   end
 
   public

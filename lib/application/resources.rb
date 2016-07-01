@@ -15,7 +15,7 @@ class Resources
     attr_reader :command_backup
 
     def reset
-      @read_db = Database.new
+      @read_db = ReadModel::Database.new
       @event_bus = Bus.new
       @event_store = EventStore.new(@event_bus)
       @command_bus = Bus.new

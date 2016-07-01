@@ -16,7 +16,7 @@ class ServiceLocator
       command_bus.register_handler(CommandHandler.new(repository))
       command_bus.register_handler(Resources.command_backup)
       # event bus registrations
-      person_updater = PersonModelUpdater.new(read_db)
+      person_updater = ReadModel::PersonModelUpdater.new(read_db)
       Resources.event_bus.register_handler(person_updater)
     end
 
