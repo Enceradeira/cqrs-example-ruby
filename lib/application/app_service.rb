@@ -2,7 +2,7 @@ require_relative 'service_locator'
 require_relative 'commands'
 require_relative 'sequence'
 require_relative 'resources'
-require_relative '../../lib/infrastructure/command_store'
+require_relative '../../lib/infrastructure/command_backup'
 
 class AppService
   private
@@ -39,7 +39,7 @@ class AppService
   end
 
   def backup_and_restore
-    commands = ServiceLocator.command_store.commands
+    commands = ServiceLocator.command_backup.commands
 
     Resources.reset
 

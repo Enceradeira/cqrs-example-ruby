@@ -1,4 +1,4 @@
-class CommandStore
+class CommandBackup
   private
   def initialize
     @commands = []
