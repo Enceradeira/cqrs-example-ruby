@@ -1,5 +1,6 @@
 Dependencies (depends on):
-    all can depend on 'common'
+
+    all depend on common
 
     infrastructure -> application   |-> domain
                                     |-> readmodel

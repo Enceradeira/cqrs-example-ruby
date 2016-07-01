@@ -1,2 +1,4 @@
-class ConcurrencyError < StandardError
+module Infrastructure
+  class ConcurrencyError < StandardError
+  end
 end

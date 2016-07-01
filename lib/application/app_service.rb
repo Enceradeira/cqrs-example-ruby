@@ -1,19 +1,19 @@
-require_relative 'service_locator'
 require_relative 'commands'
 require_relative 'sequence'
-require_relative 'resources'
+require_relative 'registry'
 require_relative '../../lib/infrastructure/command_backup'
+require_relative '../../lib/readmodel/person_facade'
 
 module Application
   class AppService
     private
 
     def bus
-      ServiceLocator.command_bus
+      Registry.command_bus
     end
 
     def person_facade
-      ReadModel::PersonFacade.new(ServiceLocator.read_db)
+      ReadModel::PersonFacade.new(Registry.read_db)
     end
 
     public
@@ -39,14 +39,5 @@ module Application
       bus.send_cmd(DeregisterPerson.new(person_id, original_version))
     end
 
-    def backup_and_restore
-      commands = ServiceLocator.command_backup.commands
-
-      Resources.reset
-
-      commands.each do |cmd|
-        bus.send_cmd(cmd)
-      end
-    end
   end
 end

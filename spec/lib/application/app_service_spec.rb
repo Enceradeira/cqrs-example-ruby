@@ -1,12 +1,10 @@
 require 'rspec'
-require_relative '../../../lib/application/resources'
 require_relative '../../../lib/application/app_service'
 require_relative '../../../lib/infrastructure/concurrency_error'
 
 module Application
   describe AppService do
     let(:app_service) { AppService.new }
-    before(:each) { Resources.reset }
 
     describe 'register_person' do
 
@@ -58,7 +56,7 @@ module Application
         change_name.call(person_on_session1, 'Carlos')
 
         # session 2 CAN'T update on stale data
-        expect { change_name.call(person_on_session2, 'Claudio') }.to raise_error(ConcurrencyError)
+        expect { change_name.call(person_on_session2, 'Claudio') }.to raise_error(StandardError)
       end
     end
 
@@ -73,20 +71,5 @@ module Application
       end
     end
 
-    describe 'backup_and_restore' do
-      it 'should recreate previous state' do
-        id_john = app_service.register_person('John')
-        id_alistair = app_service.register_person('Alistair')
-        app_service.register_person('Betty')
-        app_service.change_person_name(id_alistair, 'John', 0)
-        app_service.change_person_name(id_john, 'Cameron', 0)
-        app_service.deregister_person(id_john, 1)
-        observed_state = app_service.get_persons
-
-        app_service.backup_and_restore
-
-        expect(app_service.get_persons).to eq(observed_state)
-      end
-    end
   end
 end
